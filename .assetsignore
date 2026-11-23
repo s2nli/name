@@ -1,0 +1,9 @@
+# Not uploaded to Cloudflare as static files
+api_data
+src
+server.py
+build_data.py
+wrangler.toml
+README.md
+.gitignore
+node_modules

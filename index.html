@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b0614" />
+  <link rel="icon" href="/images/logo-64.png" />
+  <link rel="apple-touch-icon" href="/images/logo-192.png" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="description" content="Codexstudys: focused CBT practice, PYQs and revision notes for NEET preparation." />
+  <title>Codexstudys</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/notes-reader.css" />
+  <link rel="stylesheet" href="/pyq.css" />
+  <link rel="stylesheet" href="/modes.css" />
+  <style>
+    .telegram-popup[hidden] { display: none; }
+    .telegram-popup {
+      position: fixed; inset: 0; z-index: 2000; display: grid; place-items: center;
+      padding: 20px; background: rgba(15, 23, 42, .58); backdrop-filter: blur(5px);
+      animation: telegram-popup-fade .22s ease-out;
+    }
+    .telegram-popup-card {
+      position: relative; width: min(100%, 430px); padding: 34px 30px 30px; text-align: center;
+      color: #132044; background: #fff; border: 1px solid rgba(81, 68, 237, .16);
+      border-radius: 24px; box-shadow: 0 24px 70px rgba(9, 17, 45, .28);
+      animation: telegram-popup-card .28s cubic-bezier(.2, .9, .25, 1.1);
+    }
+    .telegram-popup-close {
+      position: absolute; top: 12px; right: 12px; width: 34px; height: 34px; border: 0;
+      border-radius: 50%; color: #53617d; background: #f1f3f9; font: 500 25px/1 Arial, sans-serif;
+      cursor: pointer;
+    }
+    .telegram-popup-close:hover { color: #20145e; background: #e8e5ff; }
+    .telegram-popup-icon {
+      display: grid; place-items: center; width: 62px; height: 62px; margin: 0 auto 18px;
+      border-radius: 19px; background: linear-gradient(145deg, #39b8ee, #1686cf);
+      box-shadow: 0 10px 22px rgba(22, 134, 207, .28);
+    }
+    .telegram-popup-icon svg { width: 33px; height: 33px; fill: #fff; transform: translateX(-1px); }
+    .telegram-popup h2 { margin: 0; font: 800 24px/1.22 "Plus Jakarta Sans", sans-serif; letter-spacing: -.5px; }
+    .telegram-popup p { margin: 12px auto 24px; max-width: 340px; color: #66708a; font: 500 15px/1.58 "DM Sans", sans-serif; }
+    .telegram-popup-join {
+      display: flex; align-items: center; justify-content: center; gap: 9px; min-height: 50px; width: 100%;
+      border-radius: 13px; color: #fff; background: linear-gradient(135deg, #27ace4, #1683d0);
+      box-shadow: 0 9px 18px rgba(22, 134, 207, .24); font: 700 15px "DM Sans", sans-serif;
+      text-decoration: none; transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .telegram-popup-join:hover { transform: translateY(-2px); box-shadow: 0 13px 22px rgba(22, 134, 207, .32); }
+    .telegram-popup-join svg { width: 18px; height: 18px; fill: currentColor; }
+    [data-theme="dark"] .telegram-popup-card { color: #f5f7ff; background: #1c2441; border-color: #3c4974; }
+    [data-theme="dark"] .telegram-popup-close { color: #bec8e8; background: #293252; }
+    [data-theme="dark"] .telegram-popup-close:hover { color: #fff; background: #39456c; }
+    [data-theme="dark"] .telegram-popup p { color: #bac4e2; }
+    @keyframes telegram-popup-fade { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes telegram-popup-card { from { opacity: 0; transform: translateY(14px) scale(.96); } to { opacity: 1; transform: none; } }
+    @media (max-width: 480px) {
+      .telegram-popup { padding: 16px; align-items: end; }
+      .telegram-popup-card { padding: 30px 22px 24px; border-radius: 22px; }
+      .telegram-popup h2 { font-size: 21px; }
+    }
+  </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7466650655230319" crossorigin="anonymous"></script>
+  <script>
+    window.MathJax = { tex: { inlineMath: [["\\(", "\\)"], ["$", "$"]] }, startup: { typeset: false } };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="sidebar" id="sidebar" aria-label="Primary navigation">
+    <div class="brand"><img class="brand-logo" src="/images/logo-64.png" alt="Codexstudys logo" width="40" height="40" /><span>Codexstudys</span></div>
+    <button class="exam-switch" id="examSwitch" data-change-exam type="button" aria-label="Change exam"><span class="exam-switch-icon" id="examSwitchIcon">🎯</span><span class="exam-switch-copy"><small>Current exam</small><strong id="examSwitchName">Select exam</strong></span><em>Change</em></button>
+    <nav class="nav" id="nav">
+      <button class="nav-link active" data-view="dashboard"><span>⌂</span>Dashboard</button>
+      <button class="nav-link" data-view="tests"><span>▣</span>Full-Length Tests</button>
+      <button class="nav-link" data-view="chapters"><span>▦</span>Chapter Tests</button>
+      <button class="nav-link" data-view="pyq"><span>◉</span>PYQ</button>
+      <button class="nav-link" data-view="notes"><span>✦</span>Revision Notes</button>
+    </nav>
+    <div class="sidebar-foot"><button class="install-btn side-install" id="installSideBtn" type="button"><span aria-hidden="true">⬇</span> Install App</button><a class="telegram-link" href="#" target="_blank" rel="noopener"><span>✈</span> Telegram</a><a class="whatsapp-link" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2a9.9 9.9 0 0 0-8.45 15.07L2 22l5.07-1.55A9.9 9.9 0 1 0 12.04 2Zm5.8 14.1c-.24.68-1.4 1.3-1.93 1.35-.5.05-1.12.07-1.8-.11a14.7 14.7 0 0 1-1.63-.6c-2.87-1.24-4.74-4.13-4.88-4.32-.14-.19-1.17-1.56-1.17-2.97s.74-2.1 1-2.39c.26-.29.57-.36.76-.36l.55.01c.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.3.38-.43.51-.14.14-.29.3-.12.58.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.41.29.14.46.12.63-.07.17-.19.72-.84.91-1.13.19-.29.38-.24.65-.14.26.1 1.68.79 1.97.94.29.14.48.22.55.34.07.12.07.7-.17 1.38Z"/></svg> WhatsApp</a><div><span class="status-dot"></span> Device-only progress</div></div>
+  </aside>
+  <div class="app-shell">
+    <header class="topbar">
+      <button class="icon-button" id="menuButton" aria-label="Open navigation">☰</button>
+      <button class="icon-button" id="themeButton" aria-label="Change theme mode" title="Theme mode">◐</button>
+      <div class="mobile-brand"><img class="brand-logo" src="/images/logo-64.png" alt="Codexstudys logo" width="34" height="34" /><strong>Codexstudys</strong></div>
+      <button class="install-btn" id="installBtn" type="button" aria-label="Install Codexstudys app"><span aria-hidden="true">⬇</span> Install App</button>
+      <div class="top-spacer"></div>
+      <a class="icon-button telegram-top-button" id="telegramTopLink" href="https://t.me/codexstudys" target="_blank" rel="noopener" aria-label="Join our Telegram channel" title="Join Telegram">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.7 3.1 18.4 20c-.25 1.2-.91 1.5-1.85.94l-5.1-3.76-2.46 2.37c-.27.27-.5.5-1.03.5l.37-5.2 9.47-8.56c.41-.37-.09-.58-.64-.21L5.46 13.45.42 11.87c-1.1-.34-1.12-1.1.23-1.63L20.36 2.65c.91-.34 1.7.21 1.34.45Z"/></svg>
+      </a>
+    </header>
+    <main id="view" class="content" tabindex="-1"></main>
+  </div>
+  <div class="overlay" id="installModal" role="dialog" aria-modal="true" aria-labelledby="installTitle">
+    <div class="modal install-modal"><button class="close-btn" type="button" data-close="installModal" aria-label="Close install prompt">×</button>
+      <img class="install-logo" src="/images/logo-192.png" alt="Codexstudys" width="72" height="72" />
+      <h2 id="installTitle">Install Codexstudys 📲</h2>
+      <p id="installBody">Add Codexstudys to your home screen for a faster, app-like experience.</p>
+      <div class="install-actions"><button class="button primary" id="installActionBtn" type="button">⬇ Install App</button></div>
+      <ol class="ios-install-steps" id="iosInstallSteps" style="display:none">
+        <li>Browser menu (<strong>⋮</strong> ya <strong>Share ⬆</strong>) kholo</li>
+        <li><strong>Install app</strong> ya <strong>Add to Home Screen</strong> dabao</li>
+        <li><strong>Add</strong> dabao</li>
+      </ol>
+    </div>
+  </div>
+  <div class="overlay" id="themeModal" role="dialog" aria-modal="true" aria-labelledby="themeTitle">
+    <div class="modal"><button class="close-btn" type="button" data-close="themeModal" aria-label="Close theme picker">×</button>
+      <h2 id="themeTitle">Select Theme Mode</h2>
+      <p>Pick a look. It applies instantly.</p>
+      <div class="theme-grid">
+        <button class="theme-option" type="button" data-theme="light"><span class="theme-swatch" style="background:linear-gradient(140deg,#ffd97a,#ff9f43)">☀️</span>Light Mode</button>
+        <button class="theme-option" type="button" data-theme="dark"><span class="theme-swatch" style="background:linear-gradient(140deg,#3b4a6b,#1c2540)">🌙</span>Dark Mode</button>
+        <button class="theme-option" type="button" data-theme="sandalwood"><span class="theme-swatch" style="background:linear-gradient(140deg,#cd8a4a,#8a5a28)">🌳</span>Sandalwood</button>
+        <button class="theme-option" type="button" data-theme="forest-emerald"><span class="theme-swatch" style="background:linear-gradient(140deg,#2fbf7a,#0d5c39)">🍃</span>Forest Emerald</button>
+        <button class="theme-option" type="button" data-theme="ocean-deep"><span class="theme-swatch" style="background:linear-gradient(140deg,#2196e0,#0a3a5c)">🌊</span>Ocean Deep</button>
+        <button class="theme-option" type="button" data-theme="sakura-blossom"><span class="theme-swatch" style="background:linear-gradient(140deg,#ffb6c9,#ec6f96)">🌸</span>Sakura Blossom</button>
+        <button class="theme-option" type="button" data-theme="dracula-midnight"><span class="theme-swatch" style="background:linear-gradient(140deg,#bd93f9,#44337a)">👻</span>Dracula Midnight</button>
+        <button class="theme-option" type="button" data-theme="lavender-mist"><span class="theme-swatch" style="background:linear-gradient(140deg,#d9c8fb,#9b7be0)">🪄</span>Lavender Mist</button>
+        <button class="theme-option" type="button" data-theme="cyberpunk-neon"><span class="theme-swatch" style="background:linear-gradient(140deg,#ff2ec4,#2af5ff)">⚡</span>Cyberpunk Neon</button>
+        <button class="theme-option" type="button" data-theme="system"><span class="theme-swatch" style="background:linear-gradient(140deg,#6b7280,#1f2430)">◐</span>System Default</button>
+      </div>
+      <div class="prefs-section">
+        <div class="prefs-row"><span>High contrast</span><button class="pref-toggle" id="contrastToggle" type="button" role="switch" aria-checked="false" aria-label="Toggle high contrast"><span class="pref-toggle-knob"></span></button></div>
+        <div class="prefs-row"><span>Reduce motion</span><button class="pref-toggle" id="motionToggle" type="button" role="switch" aria-checked="false" aria-label="Toggle reduced motion"><span class="pref-toggle-knob"></span></button></div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="telegram-popup" id="telegramPopup" role="presentation">
+    <section class="telegram-popup-card" role="dialog" aria-modal="true" aria-labelledby="telegramPopupTitle" aria-describedby="telegramPopupText">
+      <button class="telegram-popup-close" id="closeTelegramPopup" type="button" aria-label="Close popup">×</button>
+      <div class="telegram-popup-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M21.7 3.1 18.4 20c-.25 1.2-.91 1.5-1.85.94l-5.1-3.76-2.46 2.37c-.27.27-.5.5-1.03.5l.37-5.2 9.47-8.56c.41-.37-.09-.58-.64-.21L5.46 13.45.42 11.87c-1.1-.34-1.12-1.1.23-1.63L20.36 2.65c.91-.34 1.7.21 1.34.45Z"/></svg>
+      </div>
+      <h2 id="telegramPopupTitle">Join the Codexstudys Channels</h2>
+      <p id="telegramPopupText">Get test updates, important resources and study support directly on Telegram and WhatsApp.</p>
+      <a class="telegram-popup-join" id="telegramPopupJoin" href="https://t.me/codexstudys" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.7 3.1 18.4 20c-.25 1.2-.91 1.5-1.85.94l-5.1-3.76-2.46 2.37c-.27.27-.5.5-1.03.5l.37-5.2 9.47-8.56c.41-.37-.09-.58-.64-.21L5.46 13.45.42 11.87c-1.1-.34-1.12-1.1.23-1.63L20.36 2.65c.91-.34 1.7.21 1.34.45Z"/></svg>
+        Join Telegram
+      </a>
+      <a class="telegram-popup-join" id="whatsappPopupJoin" href="https://whatsapp.com/channel/0029VbDI2CGEAKWNSoya5L2w" target="_blank" rel="noopener" style="margin-top:10px;background:linear-gradient(135deg,#2bd16f,#17924f);box-shadow:0 9px 18px rgba(23,146,79,.24)">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2a9.9 9.9 0 0 0-8.45 15.07L2 22l5.07-1.55A9.9 9.9 0 1 0 12.04 2Zm5.8 14.1c-.24.68-1.4 1.3-1.93 1.35-.5.05-1.12.07-1.8-.11a14.7 14.7 0 0 1-1.63-.6c-2.87-1.24-4.74-4.13-4.88-4.32-.14-.19-1.17-1.56-1.17-2.97s.74-2.1 1-2.39c.26-.29.57-.36.76-.36l.55.01c.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.3.38-.43.51-.14.14-.29.3-.12.58.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.41.29.14.46.12.63-.07.17-.19.72-.84.91-1.13.19-.29.38-.24.65-.14.26.1 1.68.79 1.97.94.29.14.48.22.55.34.07.12.07.7-.17 1.38Z"/></svg>
+        Join WhatsApp Channel
+      </a>
+    </section>
+  </div>
+  <div class="pdf-modal" id="pdfModal" aria-hidden="true">
+    <div class="pdf-modal-panel" role="dialog" aria-modal="true" aria-labelledby="pdfModalTitle">
+      <header><strong id="pdfModalTitle">PDF viewer</strong><button class="icon-button small" id="closePdfModal" aria-label="Close PDF viewer">×</button></header>
+      <iframe id="syllabusFrame" title="PDF viewer"></iframe>
+    </div>
+  </div>
+  <script src="/config.js"></script>
+  <script>
+    (() => {
+      const popup = document.getElementById("telegramPopup");
+      const close = document.getElementById("closeTelegramPopup");
+      const join = document.getElementById("telegramPopupJoin");
+      if (!popup || !close || !join) return;
+
+      const dismiss = () => { popup.hidden = true; };
+      close.addEventListener("click", dismiss);
+      popup.addEventListener("click", (event) => { if (event.target === popup) dismiss(); });
+      document.addEventListener("keydown", (event) => { if (event.key === "Escape" && !popup.hidden) dismiss(); });
+    })();
+  </script>
+  <script src="/app.js"></script>
+</body>
+</html>

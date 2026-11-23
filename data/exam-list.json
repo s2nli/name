@@ -1,0 +1,44 @@
+{
+ "exams": [
+  {
+   "id": "neet",
+   "name": "NEET",
+   "full": "NEET UG",
+   "icon": "🩺",
+   "color": "#5144ed",
+   "desc": "Medical entrance: Physics, Chemistry & Biology tests, PYQs and revision notes.",
+   "examDate": "2027-05-02",
+   "status": "live"
+  },
+  {
+   "id": "jee",
+   "name": "JEE",
+   "full": "JEE Main & Advanced",
+   "icon": "⚙️",
+   "color": "#f08a1c",
+   "desc": "Engineering entrance: Physics, Chemistry & Maths tests and PYQs.",
+   "examDate": "2027-01-22",
+   "status": "live"
+  },
+  {
+   "id": "cuet",
+   "name": "CUET",
+   "full": "CUET UG",
+   "icon": "🎓",
+   "color": "#16a46e",
+   "desc": "Central university entrance: domain subjects and General Test.",
+   "examDate": "2027-05-15",
+   "status": "soon"
+  },
+  {
+   "id": "ssc",
+   "name": "SSC",
+   "full": "SSC CGL / CHSL / MTS",
+   "icon": "🏛️",
+   "color": "#e24b5e",
+   "desc": "Govt. jobs: Maths, Reasoning, English and General Awareness.",
+   "examDate": "",
+   "status": "soon"
+  }
+ ]
+}
