@@ -1,9 +1,16 @@
 # Not uploaded to Cloudflare as static files
+.git
+.github
+.gitignore
+.assetsignore
 api_data
 src
 server.py
 build_data.py
+import_sciencelesson.py
+add_exam.py
 wrangler.toml
 README.md
-.gitignore
 node_modules
+*.py
+*.zip
